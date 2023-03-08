@@ -1,0 +1,955 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css"><link rel="stylesheet" href="css/L.Control.Locate.min.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/leaflet-control-geocoder.Geocoder.css">
+        <link rel="stylesheet" href="css/leaflet-measure.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title>Bank_Customer_monitoring_kolkata_branches</title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script><script src="js/L.Control.Locate.min.js"></script>
+        <script src="js/leaflet-svg-shape-markers.min.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet-control-geocoder.Geocoder.js"></script>
+        <script src="js/leaflet-measure.js"></script>
+        <script src="data/kolkata_1.js"></script>
+        <script src="data/facilities_of_customer_2.js"></script>
+        <script src="data/Consumer_Behaviour_3.js"></script>
+        <script src="data/CustomerAnalysis_4.js"></script>
+        <script src="data/Bandhan_Bank_5.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[22.07678970095495,87.8612238651124],[23.031226040454758,89.14374769631526]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        L.control.locate({locateOptions: {maxZoom: 19}}).addTo(map);
+        var measureControl = new L.Control.Measure({
+            position: 'topleft',
+            primaryLengthUnit: 'meters',
+            secondaryLengthUnit: 'kilometers',
+            primaryAreaUnit: 'sqmeters',
+            secondaryAreaUnit: 'hectares'
+        });
+        measureControl.addTo(map);
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
+        .innerHTML = '';
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
+        .className += ' fas fa-ruler';
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        map.createPane('pane_Googlemap_0');
+        map.getPane('pane_Googlemap_0').style.zIndex = 400;
+        var layer_Googlemap_0 = L.tileLayer('https://mt1.google.com/vt/lyrs=r&x={x}&y={y}&z={z}', {
+            pane: 'pane_Googlemap_0',
+            opacity: 1.0,
+            attribution: '',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 18
+        });
+        layer_Googlemap_0;
+        map.addLayer(layer_Googlemap_0);
+        function pop_kolkata_1(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ID_0'] !== null ? autolinker.link(feature.properties['ID_0'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ISO'] !== null ? autolinker.link(feature.properties['ISO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAME_0'] !== null ? autolinker.link(feature.properties['NAME_0'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ID_1'] !== null ? autolinker.link(feature.properties['ID_1'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAME_1'] !== null ? autolinker.link(feature.properties['NAME_1'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ID_2'] !== null ? autolinker.link(feature.properties['ID_2'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAME_2'] !== null ? autolinker.link(feature.properties['NAME_2'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ID_3'] !== null ? autolinker.link(feature.properties['ID_3'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAME_3'] !== null ? autolinker.link(feature.properties['NAME_3'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['TYPE_3'] !== null ? autolinker.link(feature.properties['TYPE_3'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ENGTYPE_3'] !== null ? autolinker.link(feature.properties['ENGTYPE_3'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NL_NAME_3'] !== null ? autolinker.link(feature.properties['NL_NAME_3'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['VARNAME_3'] !== null ? autolinker.link(feature.properties['VARNAME_3'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_kolkata_1_0() {
+            return {
+                pane: 'pane_kolkata_1',
+                opacity: 1,
+                color: 'rgba(0,29,249,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 4.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_kolkata_1');
+        map.getPane('pane_kolkata_1').style.zIndex = 401;
+        map.getPane('pane_kolkata_1').style['mix-blend-mode'] = 'normal';
+        var layer_kolkata_1 = new L.geoJson(json_kolkata_1, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_kolkata_1',
+            layerName: 'layer_kolkata_1',
+            pane: 'pane_kolkata_1',
+            onEachFeature: pop_kolkata_1,
+            style: style_kolkata_1_0,
+        });
+        bounds_group.addLayer(layer_kolkata_1);
+        map.addLayer(layer_kolkata_1);
+        function pop_facilities_of_customer_2(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['OBJECTID'] !== null ? autolinker.link(feature.properties['OBJECTID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Bank_Name</th>\
+                        <td>' + (feature.properties['Bank_Name'] !== null ? autolinker.link(feature.properties['Bank_Name'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Lat'] !== null ? autolinker.link(feature.properties['Lat'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Long'] !== null ? autolinker.link(feature.properties['Long'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Address</th>\
+                        <td>' + (feature.properties['Address'] !== null ? autolinker.link(feature.properties['Address'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['BUFF_DIST'] !== null ? autolinker.link(feature.properties['BUFF_DIST'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ORIG_FID'] !== null ? autolinker.link(feature.properties['ORIG_FID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Shape_Leng'] !== null ? autolinker.link(feature.properties['Shape_Leng'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Shape_Area'] !== null ? autolinker.link(feature.properties['Shape_Area'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_facilities_of_customer_2_0() {
+            return {
+                pane: 'pane_facilities_of_customer_2',
+                opacity: 1,
+                color: 'rgba(255,127,0,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 4.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_facilities_of_customer_2');
+        map.getPane('pane_facilities_of_customer_2').style.zIndex = 402;
+        map.getPane('pane_facilities_of_customer_2').style['mix-blend-mode'] = 'normal';
+        var layer_facilities_of_customer_2 = new L.geoJson(json_facilities_of_customer_2, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_facilities_of_customer_2',
+            layerName: 'layer_facilities_of_customer_2',
+            pane: 'pane_facilities_of_customer_2',
+            onEachFeature: pop_facilities_of_customer_2,
+            style: style_facilities_of_customer_2_0,
+        });
+        bounds_group.addLayer(layer_facilities_of_customer_2);
+        map.addLayer(layer_facilities_of_customer_2);
+        function pop_Consumer_Behaviour_3(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Id</th>\
+                        <td>' + (feature.properties['Id'] !== null ? autolinker.link(feature.properties['Id'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">income</th>\
+                        <td>' + (feature.properties['income'] !== null ? autolinker.link(feature.properties['income'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">no_of_hous</th>\
+                        <td>' + (feature.properties['no_of_hous'] !== null ? autolinker.link(feature.properties['no_of_hous'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">type_of_ho</th>\
+                        <td>' + (feature.properties['type_of_ho'] !== null ? autolinker.link(feature.properties['type_of_ho'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Consumer_Behaviour_3_0(feature) {
+            switch(String(feature.properties['income'])) {
+                case '100000':
+                    return {
+                pane: 'pane_Consumer_Behaviour_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(52,221,36,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '110000':
+                    return {
+                pane: 'pane_Consumer_Behaviour_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(146,206,106,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '120000':
+                    return {
+                pane: 'pane_Consumer_Behaviour_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(51,236,97,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '200000':
+                    return {
+                pane: 'pane_Consumer_Behaviour_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(100,232,55,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '210000':
+                    return {
+                pane: 'pane_Consumer_Behaviour_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(240,95,76,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '250000':
+                    return {
+                pane: 'pane_Consumer_Behaviour_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(50,212,63,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '270000':
+                    return {
+                pane: 'pane_Consumer_Behaviour_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(33,57,213,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '290000':
+                    return {
+                pane: 'pane_Consumer_Behaviour_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(217,129,132,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '300000':
+                    return {
+                pane: 'pane_Consumer_Behaviour_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(211,83,32,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '310000':
+                    return {
+                pane: 'pane_Consumer_Behaviour_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(205,172,64,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '330000':
+                    return {
+                pane: 'pane_Consumer_Behaviour_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(16,222,233,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '350000':
+                    return {
+                pane: 'pane_Consumer_Behaviour_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(138,200,57,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '360000':
+                    return {
+                pane: 'pane_Consumer_Behaviour_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(133,197,234,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '380000':
+                    return {
+                pane: 'pane_Consumer_Behaviour_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(97,134,222,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '400000':
+                    return {
+                pane: 'pane_Consumer_Behaviour_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(114,56,223,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '410000':
+                    return {
+                pane: 'pane_Consumer_Behaviour_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(226,98,228,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '420000':
+                    return {
+                pane: 'pane_Consumer_Behaviour_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(112,229,159,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '430000':
+                    return {
+                pane: 'pane_Consumer_Behaviour_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(212,22,152,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '450000':
+                    return {
+                pane: 'pane_Consumer_Behaviour_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(121,218,192,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '455000':
+                    return {
+                pane: 'pane_Consumer_Behaviour_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(222,182,122,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '460000':
+                    return {
+                pane: 'pane_Consumer_Behaviour_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(190,62,216,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '480000':
+                    return {
+                pane: 'pane_Consumer_Behaviour_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(215,227,109,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '510000':
+                    return {
+                pane: 'pane_Consumer_Behaviour_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(236,71,211,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '520000':
+                    return {
+                pane: 'pane_Consumer_Behaviour_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(85,189,218,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '575000':
+                    return {
+                pane: 'pane_Consumer_Behaviour_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(78,75,237,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '580000':
+                    return {
+                pane: 'pane_Consumer_Behaviour_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(212,205,101,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '600000':
+                    return {
+                pane: 'pane_Consumer_Behaviour_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(135,231,220,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '610000':
+                    return {
+                pane: 'pane_Consumer_Behaviour_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(235,127,167,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '620000':
+                    return {
+                pane: 'pane_Consumer_Behaviour_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,63,94,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '645000':
+                    return {
+                pane: 'pane_Consumer_Behaviour_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(208,119,46,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '680000':
+                    return {
+                pane: 'pane_Consumer_Behaviour_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(180,82,229,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '700000':
+                    return {
+                pane: 'pane_Consumer_Behaviour_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(189,230,65,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '710000':
+                    return {
+                pane: 'pane_Consumer_Behaviour_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(74,42,215,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '720000':
+                    return {
+                pane: 'pane_Consumer_Behaviour_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(132,180,235,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '800000':
+                    return {
+                pane: 'pane_Consumer_Behaviour_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(80,232,166,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '900000':
+                    return {
+                pane: 'pane_Consumer_Behaviour_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(144,73,216,1.0)',
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_Consumer_Behaviour_3');
+        map.getPane('pane_Consumer_Behaviour_3').style.zIndex = 403;
+        map.getPane('pane_Consumer_Behaviour_3').style['mix-blend-mode'] = 'normal';
+        var layer_Consumer_Behaviour_3 = new L.geoJson(json_Consumer_Behaviour_3, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Consumer_Behaviour_3',
+            layerName: 'layer_Consumer_Behaviour_3',
+            pane: 'pane_Consumer_Behaviour_3',
+            onEachFeature: pop_Consumer_Behaviour_3,
+            style: style_Consumer_Behaviour_3_0,
+        });
+        bounds_group.addLayer(layer_Consumer_Behaviour_3);
+        map.addLayer(layer_Consumer_Behaviour_3);
+        function pop_CustomerAnalysis_4(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Customer_n</th>\
+                        <td>' + (feature.properties['Customer_n'] !== null ? autolinker.link(feature.properties['Customer_n'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Address</th>\
+                        <td>' + (feature.properties['Address'] !== null ? autolinker.link(feature.properties['Address'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Associated</th>\
+                        <td>' + (feature.properties['Associated'] !== null ? autolinker.link(feature.properties['Associated'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Customer_i</th>\
+                        <td>' + (feature.properties['Customer_i'] !== null ? autolinker.link(feature.properties['Customer_i'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Customer_t</th>\
+                        <td>' + (feature.properties['Customer_t'] !== null ? autolinker.link(feature.properties['Customer_t'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_CustomerAnalysis_4_0(feature) {
+            switch(String(feature.properties['Customer_t'])) {
+                case 'Current Customer':
+                    return {
+                pane: 'pane_CustomerAnalysis_4',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(0,252,0,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Customer Outside Branch':
+                    return {
+                pane: 'pane_CustomerAnalysis_4',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(248,0,0,1.0)',
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_CustomerAnalysis_4');
+        map.getPane('pane_CustomerAnalysis_4').style.zIndex = 404;
+        map.getPane('pane_CustomerAnalysis_4').style['mix-blend-mode'] = 'normal';
+        var layer_CustomerAnalysis_4 = new L.geoJson(json_CustomerAnalysis_4, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_CustomerAnalysis_4',
+            layerName: 'layer_CustomerAnalysis_4',
+            pane: 'pane_CustomerAnalysis_4',
+            onEachFeature: pop_CustomerAnalysis_4,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_CustomerAnalysis_4_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_CustomerAnalysis_4);
+        map.addLayer(layer_CustomerAnalysis_4);
+        function pop_Bandhan_Bank_5(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Bank_Name</th>\
+                        <td>' + (feature.properties['Bank_Name'] !== null ? autolinker.link(feature.properties['Bank_Name'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Lat'] !== null ? autolinker.link(feature.properties['Lat'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Long'] !== null ? autolinker.link(feature.properties['Long'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Address</th>\
+                        <td>' + (feature.properties['Address'] !== null ? autolinker.link(feature.properties['Address'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Bandhan_Bank_5_0() {
+            return {
+                pane: 'pane_Bandhan_Bank_5',
+                shape: 'diamond',
+                radius: 8.0,
+                opacity: 1,
+                color: 'rgba(61,128,53,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(169,6,169,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Bandhan_Bank_5');
+        map.getPane('pane_Bandhan_Bank_5').style.zIndex = 405;
+        map.getPane('pane_Bandhan_Bank_5').style['mix-blend-mode'] = 'normal';
+        var layer_Bandhan_Bank_5 = new L.geoJson(json_Bandhan_Bank_5, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Bandhan_Bank_5',
+            layerName: 'layer_Bandhan_Bank_5',
+            pane: 'pane_Bandhan_Bank_5',
+            onEachFeature: pop_Bandhan_Bank_5,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.shapeMarker(latlng, style_Bandhan_Bank_5_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Bandhan_Bank_5);
+        map.addLayer(layer_Bandhan_Bank_5);
+            var title = new L.Control();
+            title.onAdd = function (map) {
+                this._div = L.DomUtil.create('div', 'info');
+                this.update();
+                return this._div;
+            };
+            title.update = function () {
+                this._div.innerHTML = '<h2>Bank_Customer_monitoring_kolkata_branches</h2>';
+            };
+            title.addTo(map);
+        var osmGeocoder = new L.Control.Geocoder({
+            collapsed: true,
+            position: 'topleft',
+            text: 'Search',
+            title: 'Testing'
+        }).addTo(map);
+        document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
+        .className += ' fa fa-search';
+        document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
+        .title += 'Search for a place';
+        setBounds();
+        </script>
+    </body>
+</html>
