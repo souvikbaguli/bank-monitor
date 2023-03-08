@@ -8,6 +8,7 @@
         <meta name="apple-mobile-web-app-capable" content="yes">
         <link rel="stylesheet" href="css/leaflet.css"><link rel="stylesheet" href="css/L.Control.Locate.min.css">
         <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/leaflet-search.css">
         <link rel="stylesheet" href="css/leaflet-control-geocoder.Geocoder.css">
         <link rel="stylesheet" href="css/leaflet-measure.css">
         <style>
@@ -18,7 +19,7 @@
             margin: 0;
         }
         </style>
-        <title>Bank_Customer_monitoring_kolkata_branches</title>
+        <title>consumer_monitoring_kolkata_branches</title>
     </head>
     <body>
         <div id="map">
@@ -35,15 +36,21 @@
         <script src="js/labels.js"></script>
         <script src="js/leaflet-control-geocoder.Geocoder.js"></script>
         <script src="js/leaflet-measure.js"></script>
-        <script src="data/kolkata_1.js"></script>
-        <script src="data/facilities_of_customer_2.js"></script>
-        <script src="data/Consumer_Behaviour_3.js"></script>
-        <script src="data/CustomerAnalysis_4.js"></script>
-        <script src="data/Bandhan_Bank_5.js"></script>
+        <script src="js/leaflet-search.js"></script>
+        <script src="data/kolkata_2.js"></script>
+        <script src="data/facilities_of_customer_3.js"></script>
+        <script src="data/Consumer_Behaviourlakhyear_4.js"></script>
+        <script src="data/CustomerAnalysis_5.js"></script>
+        <script src="data/Bandhan_Bank_6.js"></script>
         <script>
+        var highlightLayer;
+        function highlightFeature(e) {
+            highlightLayer = e.target;
+            highlightLayer.openPopup();
+        }
         var map = L.map('map', {
             zoomControl:true, maxZoom:28, minZoom:1
-        }).fitBounds([[22.07678970095495,87.8612238651124],[23.031226040454758,89.14374769631526]]);
+        }).fitBounds([[22.158449103482656,87.80538616332056],[23.112885442982577,89.08790999452357]]);
         var hash = new L.Hash(map);
         map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
         var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
@@ -63,10 +70,23 @@
         var bounds_group = new L.featureGroup([]);
         function setBounds() {
         }
-        map.createPane('pane_Googlemap_0');
-        map.getPane('pane_Googlemap_0').style.zIndex = 400;
-        var layer_Googlemap_0 = L.tileLayer('https://mt1.google.com/vt/lyrs=r&x={x}&y={y}&z={z}', {
-            pane: 'pane_Googlemap_0',
+        map.createPane('pane_OSMStandard_0');
+        map.getPane('pane_OSMStandard_0').style.zIndex = 400;
+        var layer_OSMStandard_0 = L.tileLayer('http://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            pane: 'pane_OSMStandard_0',
+            opacity: 1.0,
+            attribution: '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap contributors, CC-BY-SA</a>',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 19
+        });
+        layer_OSMStandard_0;
+        map.addLayer(layer_OSMStandard_0);
+        map.createPane('pane_Googlemap_1');
+        map.getPane('pane_Googlemap_1').style.zIndex = 401;
+        var layer_Googlemap_1 = L.tileLayer('https://mt1.google.com/vt/lyrs=r&x={x}&y={y}&z={z}', {
+            pane: 'pane_Googlemap_1',
             opacity: 1.0,
             attribution: '',
             minZoom: 1,
@@ -74,9 +94,21 @@
             minNativeZoom: 0,
             maxNativeZoom: 18
         });
-        layer_Googlemap_0;
-        map.addLayer(layer_Googlemap_0);
-        function pop_kolkata_1(feature, layer) {
+        layer_Googlemap_1;
+        map.addLayer(layer_Googlemap_1);
+        function pop_kolkata_2(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
             var popupContent = '<table>\
                     <tr>\
                         <td colspan="2">' + (feature.properties['ID_0'] !== null ? autolinker.link(feature.properties['ID_0'].toLocaleString()) : '') + '</td>\
@@ -121,11 +153,11 @@
             layer.bindPopup(popupContent, {maxHeight: 400});
         }
 
-        function style_kolkata_1_0() {
+        function style_kolkata_2_0() {
             return {
-                pane: 'pane_kolkata_1',
+                pane: 'pane_kolkata_2',
                 opacity: 1,
-                color: 'rgba(0,29,249,1.0)',
+                color: 'rgba(53,121,177,1.0)',
                 dashArray: '',
                 lineCap: 'square',
                 lineJoin: 'bevel',
@@ -134,28 +166,39 @@
                 interactive: true,
             }
         }
-        map.createPane('pane_kolkata_1');
-        map.getPane('pane_kolkata_1').style.zIndex = 401;
-        map.getPane('pane_kolkata_1').style['mix-blend-mode'] = 'normal';
-        var layer_kolkata_1 = new L.geoJson(json_kolkata_1, {
+        map.createPane('pane_kolkata_2');
+        map.getPane('pane_kolkata_2').style.zIndex = 402;
+        map.getPane('pane_kolkata_2').style['mix-blend-mode'] = 'normal';
+        var layer_kolkata_2 = new L.geoJson(json_kolkata_2, {
             attribution: '',
             interactive: true,
-            dataVar: 'json_kolkata_1',
-            layerName: 'layer_kolkata_1',
-            pane: 'pane_kolkata_1',
-            onEachFeature: pop_kolkata_1,
-            style: style_kolkata_1_0,
+            dataVar: 'json_kolkata_2',
+            layerName: 'layer_kolkata_2',
+            pane: 'pane_kolkata_2',
+            onEachFeature: pop_kolkata_2,
+            style: style_kolkata_2_0,
         });
-        bounds_group.addLayer(layer_kolkata_1);
-        map.addLayer(layer_kolkata_1);
-        function pop_facilities_of_customer_2(feature, layer) {
+        bounds_group.addLayer(layer_kolkata_2);
+        map.addLayer(layer_kolkata_2);
+        function pop_facilities_of_customer_3(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
             var popupContent = '<table>\
                     <tr>\
                         <td colspan="2">' + (feature.properties['OBJECTID'] !== null ? autolinker.link(feature.properties['OBJECTID'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <th scope="row">Bank_Name</th>\
-                        <td>' + (feature.properties['Bank_Name'] !== null ? autolinker.link(feature.properties['Bank_Name'].toLocaleString()) : '') + '</td>\
+                        <td colspan="2">' + (feature.properties['Bank_Name'] !== null ? autolinker.link(feature.properties['Bank_Name'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
                         <td colspan="2">' + (feature.properties['Lat'] !== null ? autolinker.link(feature.properties['Lat'].toLocaleString()) : '') + '</td>\
@@ -164,8 +207,7 @@
                         <td colspan="2">' + (feature.properties['Long'] !== null ? autolinker.link(feature.properties['Long'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <th scope="row">Address</th>\
-                        <td>' + (feature.properties['Address'] !== null ? autolinker.link(feature.properties['Address'].toLocaleString()) : '') + '</td>\
+                        <td colspan="2">' + (feature.properties['Address'] !== null ? autolinker.link(feature.properties['Address'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
                         <td colspan="2">' + (feature.properties['BUFF_DIST'] !== null ? autolinker.link(feature.properties['BUFF_DIST'].toLocaleString()) : '') + '</td>\
@@ -183,9 +225,9 @@
             layer.bindPopup(popupContent, {maxHeight: 400});
         }
 
-        function style_facilities_of_customer_2_0() {
+        function style_facilities_of_customer_3_0() {
             return {
-                pane: 'pane_facilities_of_customer_2',
+                pane: 'pane_facilities_of_customer_3',
                 opacity: 1,
                 color: 'rgba(255,127,0,1.0)',
                 dashArray: '',
@@ -196,47 +238,57 @@
                 interactive: true,
             }
         }
-        map.createPane('pane_facilities_of_customer_2');
-        map.getPane('pane_facilities_of_customer_2').style.zIndex = 402;
-        map.getPane('pane_facilities_of_customer_2').style['mix-blend-mode'] = 'normal';
-        var layer_facilities_of_customer_2 = new L.geoJson(json_facilities_of_customer_2, {
+        map.createPane('pane_facilities_of_customer_3');
+        map.getPane('pane_facilities_of_customer_3').style.zIndex = 403;
+        map.getPane('pane_facilities_of_customer_3').style['mix-blend-mode'] = 'normal';
+        var layer_facilities_of_customer_3 = new L.geoJson(json_facilities_of_customer_3, {
             attribution: '',
             interactive: true,
-            dataVar: 'json_facilities_of_customer_2',
-            layerName: 'layer_facilities_of_customer_2',
-            pane: 'pane_facilities_of_customer_2',
-            onEachFeature: pop_facilities_of_customer_2,
-            style: style_facilities_of_customer_2_0,
+            dataVar: 'json_facilities_of_customer_3',
+            layerName: 'layer_facilities_of_customer_3',
+            pane: 'pane_facilities_of_customer_3',
+            onEachFeature: pop_facilities_of_customer_3,
+            style: style_facilities_of_customer_3_0,
         });
-        bounds_group.addLayer(layer_facilities_of_customer_2);
-        map.addLayer(layer_facilities_of_customer_2);
-        function pop_Consumer_Behaviour_3(feature, layer) {
+        bounds_group.addLayer(layer_facilities_of_customer_3);
+        map.addLayer(layer_facilities_of_customer_3);
+        function pop_Consumer_Behaviourlakhyear_4(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
             var popupContent = '<table>\
                     <tr>\
-                        <th scope="row">Id</th>\
-                        <td>' + (feature.properties['Id'] !== null ? autolinker.link(feature.properties['Id'].toLocaleString()) : '') + '</td>\
+                        <td colspan="2">' + (feature.properties['Id'] !== null ? autolinker.link(feature.properties['Id'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <th scope="row">income</th>\
-                        <td>' + (feature.properties['income'] !== null ? autolinker.link(feature.properties['income'].toLocaleString()) : '') + '</td>\
+                        <td colspan="2">' + (feature.properties['FID_1'] !== null ? autolinker.link(feature.properties['FID_1'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <th scope="row">no_of_hous</th>\
-                        <td>' + (feature.properties['no_of_hous'] !== null ? autolinker.link(feature.properties['no_of_hous'].toLocaleString()) : '') + '</td>\
+                        <td colspan="2">' + (feature.properties['Income'] !== null ? autolinker.link(feature.properties['Income'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <th scope="row">type_of_ho</th>\
-                        <td>' + (feature.properties['type_of_ho'] !== null ? autolinker.link(feature.properties['type_of_ho'].toLocaleString()) : '') + '</td>\
+                        <td colspan="2">' + (feature.properties['No_of_Hous'] !== null ? autolinker.link(feature.properties['No_of_Hous'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Type_of_Ho'] !== null ? autolinker.link(feature.properties['Type_of_Ho'].toLocaleString()) : '') + '</td>\
                     </tr>\
                 </table>';
             layer.bindPopup(popupContent, {maxHeight: 400});
         }
 
-        function style_Consumer_Behaviour_3_0(feature) {
-            switch(String(feature.properties['income'])) {
-                case '100000':
-                    return {
-                pane: 'pane_Consumer_Behaviour_3',
+        function style_Consumer_Behaviourlakhyear_4_0(feature) {
+            if (feature.properties['Income'] >= 100000.000000 && feature.properties['Income'] <= 380000.000000 ) {
+                return {
+                pane: 'pane_Consumer_Behaviourlakhyear_4',
                 opacity: 1,
                 color: 'rgba(35,35,35,1.0)',
                 dashArray: '',
@@ -245,13 +297,13 @@
                 weight: 1.0, 
                 fill: true,
                 fillOpacity: 1,
-                fillColor: 'rgba(52,221,36,1.0)',
+                fillColor: 'rgba(48,18,59,1.0)',
                 interactive: true,
             }
-                    break;
-                case '110000':
-                    return {
-                pane: 'pane_Consumer_Behaviour_3',
+            }
+            if (feature.properties['Income'] >= 380000.000000 && feature.properties['Income'] <= 520000.000000 ) {
+                return {
+                pane: 'pane_Consumer_Behaviourlakhyear_4',
                 opacity: 1,
                 color: 'rgba(35,35,35,1.0)',
                 dashArray: '',
@@ -260,13 +312,13 @@
                 weight: 1.0, 
                 fill: true,
                 fillOpacity: 1,
-                fillColor: 'rgba(146,206,106,1.0)',
+                fillColor: 'rgba(40,188,235,1.0)',
                 interactive: true,
             }
-                    break;
-                case '120000':
-                    return {
-                pane: 'pane_Consumer_Behaviour_3',
+            }
+            if (feature.properties['Income'] >= 520000.000000 && feature.properties['Income'] <= 620000.000000 ) {
+                return {
+                pane: 'pane_Consumer_Behaviourlakhyear_4',
                 opacity: 1,
                 color: 'rgba(35,35,35,1.0)',
                 dashArray: '',
@@ -275,13 +327,13 @@
                 weight: 1.0, 
                 fill: true,
                 fillOpacity: 1,
-                fillColor: 'rgba(51,236,97,1.0)',
+                fillColor: 'rgba(164,252,60,1.0)',
                 interactive: true,
             }
-                    break;
-                case '200000':
-                    return {
-                pane: 'pane_Consumer_Behaviour_3',
+            }
+            if (feature.properties['Income'] >= 620000.000000 && feature.properties['Income'] <= 680000.000000 ) {
+                return {
+                pane: 'pane_Consumer_Behaviourlakhyear_4',
                 opacity: 1,
                 color: 'rgba(35,35,35,1.0)',
                 dashArray: '',
@@ -290,13 +342,13 @@
                 weight: 1.0, 
                 fill: true,
                 fillOpacity: 1,
-                fillColor: 'rgba(100,232,55,1.0)',
+                fillColor: 'rgba(251,126,33,1.0)',
                 interactive: true,
             }
-                    break;
-                case '210000':
-                    return {
-                pane: 'pane_Consumer_Behaviour_3',
+            }
+            if (feature.properties['Income'] >= 680000.000000 && feature.properties['Income'] <= 900000.000000 ) {
+                return {
+                pane: 'pane_Consumer_Behaviourlakhyear_4',
                 opacity: 1,
                 color: 'rgba(35,35,35,1.0)',
                 dashArray: '',
@@ -305,522 +357,63 @@
                 weight: 1.0, 
                 fill: true,
                 fillOpacity: 1,
-                fillColor: 'rgba(240,95,76,1.0)',
+                fillColor: 'rgba(122,4,3,1.0)',
                 interactive: true,
             }
-                    break;
-                case '250000':
-                    return {
-                pane: 'pane_Consumer_Behaviour_3',
-                opacity: 1,
-                color: 'rgba(35,35,35,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(50,212,63,1.0)',
-                interactive: true,
-            }
-                    break;
-                case '270000':
-                    return {
-                pane: 'pane_Consumer_Behaviour_3',
-                opacity: 1,
-                color: 'rgba(35,35,35,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(33,57,213,1.0)',
-                interactive: true,
-            }
-                    break;
-                case '290000':
-                    return {
-                pane: 'pane_Consumer_Behaviour_3',
-                opacity: 1,
-                color: 'rgba(35,35,35,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(217,129,132,1.0)',
-                interactive: true,
-            }
-                    break;
-                case '300000':
-                    return {
-                pane: 'pane_Consumer_Behaviour_3',
-                opacity: 1,
-                color: 'rgba(35,35,35,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(211,83,32,1.0)',
-                interactive: true,
-            }
-                    break;
-                case '310000':
-                    return {
-                pane: 'pane_Consumer_Behaviour_3',
-                opacity: 1,
-                color: 'rgba(35,35,35,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(205,172,64,1.0)',
-                interactive: true,
-            }
-                    break;
-                case '330000':
-                    return {
-                pane: 'pane_Consumer_Behaviour_3',
-                opacity: 1,
-                color: 'rgba(35,35,35,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(16,222,233,1.0)',
-                interactive: true,
-            }
-                    break;
-                case '350000':
-                    return {
-                pane: 'pane_Consumer_Behaviour_3',
-                opacity: 1,
-                color: 'rgba(35,35,35,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(138,200,57,1.0)',
-                interactive: true,
-            }
-                    break;
-                case '360000':
-                    return {
-                pane: 'pane_Consumer_Behaviour_3',
-                opacity: 1,
-                color: 'rgba(35,35,35,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(133,197,234,1.0)',
-                interactive: true,
-            }
-                    break;
-                case '380000':
-                    return {
-                pane: 'pane_Consumer_Behaviour_3',
-                opacity: 1,
-                color: 'rgba(35,35,35,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(97,134,222,1.0)',
-                interactive: true,
-            }
-                    break;
-                case '400000':
-                    return {
-                pane: 'pane_Consumer_Behaviour_3',
-                opacity: 1,
-                color: 'rgba(35,35,35,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(114,56,223,1.0)',
-                interactive: true,
-            }
-                    break;
-                case '410000':
-                    return {
-                pane: 'pane_Consumer_Behaviour_3',
-                opacity: 1,
-                color: 'rgba(35,35,35,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(226,98,228,1.0)',
-                interactive: true,
-            }
-                    break;
-                case '420000':
-                    return {
-                pane: 'pane_Consumer_Behaviour_3',
-                opacity: 1,
-                color: 'rgba(35,35,35,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(112,229,159,1.0)',
-                interactive: true,
-            }
-                    break;
-                case '430000':
-                    return {
-                pane: 'pane_Consumer_Behaviour_3',
-                opacity: 1,
-                color: 'rgba(35,35,35,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(212,22,152,1.0)',
-                interactive: true,
-            }
-                    break;
-                case '450000':
-                    return {
-                pane: 'pane_Consumer_Behaviour_3',
-                opacity: 1,
-                color: 'rgba(35,35,35,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(121,218,192,1.0)',
-                interactive: true,
-            }
-                    break;
-                case '455000':
-                    return {
-                pane: 'pane_Consumer_Behaviour_3',
-                opacity: 1,
-                color: 'rgba(35,35,35,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(222,182,122,1.0)',
-                interactive: true,
-            }
-                    break;
-                case '460000':
-                    return {
-                pane: 'pane_Consumer_Behaviour_3',
-                opacity: 1,
-                color: 'rgba(35,35,35,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(190,62,216,1.0)',
-                interactive: true,
-            }
-                    break;
-                case '480000':
-                    return {
-                pane: 'pane_Consumer_Behaviour_3',
-                opacity: 1,
-                color: 'rgba(35,35,35,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(215,227,109,1.0)',
-                interactive: true,
-            }
-                    break;
-                case '510000':
-                    return {
-                pane: 'pane_Consumer_Behaviour_3',
-                opacity: 1,
-                color: 'rgba(35,35,35,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(236,71,211,1.0)',
-                interactive: true,
-            }
-                    break;
-                case '520000':
-                    return {
-                pane: 'pane_Consumer_Behaviour_3',
-                opacity: 1,
-                color: 'rgba(35,35,35,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(85,189,218,1.0)',
-                interactive: true,
-            }
-                    break;
-                case '575000':
-                    return {
-                pane: 'pane_Consumer_Behaviour_3',
-                opacity: 1,
-                color: 'rgba(35,35,35,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(78,75,237,1.0)',
-                interactive: true,
-            }
-                    break;
-                case '580000':
-                    return {
-                pane: 'pane_Consumer_Behaviour_3',
-                opacity: 1,
-                color: 'rgba(35,35,35,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(212,205,101,1.0)',
-                interactive: true,
-            }
-                    break;
-                case '600000':
-                    return {
-                pane: 'pane_Consumer_Behaviour_3',
-                opacity: 1,
-                color: 'rgba(35,35,35,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(135,231,220,1.0)',
-                interactive: true,
-            }
-                    break;
-                case '610000':
-                    return {
-                pane: 'pane_Consumer_Behaviour_3',
-                opacity: 1,
-                color: 'rgba(35,35,35,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(235,127,167,1.0)',
-                interactive: true,
-            }
-                    break;
-                case '620000':
-                    return {
-                pane: 'pane_Consumer_Behaviour_3',
-                opacity: 1,
-                color: 'rgba(35,35,35,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(219,63,94,1.0)',
-                interactive: true,
-            }
-                    break;
-                case '645000':
-                    return {
-                pane: 'pane_Consumer_Behaviour_3',
-                opacity: 1,
-                color: 'rgba(35,35,35,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(208,119,46,1.0)',
-                interactive: true,
-            }
-                    break;
-                case '680000':
-                    return {
-                pane: 'pane_Consumer_Behaviour_3',
-                opacity: 1,
-                color: 'rgba(35,35,35,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(180,82,229,1.0)',
-                interactive: true,
-            }
-                    break;
-                case '700000':
-                    return {
-                pane: 'pane_Consumer_Behaviour_3',
-                opacity: 1,
-                color: 'rgba(35,35,35,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(189,230,65,1.0)',
-                interactive: true,
-            }
-                    break;
-                case '710000':
-                    return {
-                pane: 'pane_Consumer_Behaviour_3',
-                opacity: 1,
-                color: 'rgba(35,35,35,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(74,42,215,1.0)',
-                interactive: true,
-            }
-                    break;
-                case '720000':
-                    return {
-                pane: 'pane_Consumer_Behaviour_3',
-                opacity: 1,
-                color: 'rgba(35,35,35,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(132,180,235,1.0)',
-                interactive: true,
-            }
-                    break;
-                case '800000':
-                    return {
-                pane: 'pane_Consumer_Behaviour_3',
-                opacity: 1,
-                color: 'rgba(35,35,35,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(80,232,166,1.0)',
-                interactive: true,
-            }
-                    break;
-                case '900000':
-                    return {
-                pane: 'pane_Consumer_Behaviour_3',
-                opacity: 1,
-                color: 'rgba(35,35,35,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(144,73,216,1.0)',
-                interactive: true,
-            }
-                    break;
             }
         }
-        map.createPane('pane_Consumer_Behaviour_3');
-        map.getPane('pane_Consumer_Behaviour_3').style.zIndex = 403;
-        map.getPane('pane_Consumer_Behaviour_3').style['mix-blend-mode'] = 'normal';
-        var layer_Consumer_Behaviour_3 = new L.geoJson(json_Consumer_Behaviour_3, {
+        map.createPane('pane_Consumer_Behaviourlakhyear_4');
+        map.getPane('pane_Consumer_Behaviourlakhyear_4').style.zIndex = 404;
+        map.getPane('pane_Consumer_Behaviourlakhyear_4').style['mix-blend-mode'] = 'normal';
+        var layer_Consumer_Behaviourlakhyear_4 = new L.geoJson(json_Consumer_Behaviourlakhyear_4, {
             attribution: '',
             interactive: true,
-            dataVar: 'json_Consumer_Behaviour_3',
-            layerName: 'layer_Consumer_Behaviour_3',
-            pane: 'pane_Consumer_Behaviour_3',
-            onEachFeature: pop_Consumer_Behaviour_3,
-            style: style_Consumer_Behaviour_3_0,
+            dataVar: 'json_Consumer_Behaviourlakhyear_4',
+            layerName: 'layer_Consumer_Behaviourlakhyear_4',
+            pane: 'pane_Consumer_Behaviourlakhyear_4',
+            onEachFeature: pop_Consumer_Behaviourlakhyear_4,
+            style: style_Consumer_Behaviourlakhyear_4_0,
         });
-        bounds_group.addLayer(layer_Consumer_Behaviour_3);
-        map.addLayer(layer_Consumer_Behaviour_3);
-        function pop_CustomerAnalysis_4(feature, layer) {
+        bounds_group.addLayer(layer_Consumer_Behaviourlakhyear_4);
+        map.addLayer(layer_Consumer_Behaviourlakhyear_4);
+        function pop_CustomerAnalysis_5(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
             var popupContent = '<table>\
                     <tr>\
-                        <th scope="row">Customer_n</th>\
-                        <td>' + (feature.properties['Customer_n'] !== null ? autolinker.link(feature.properties['Customer_n'].toLocaleString()) : '') + '</td>\
+                        <td colspan="2">' + (feature.properties['Customer_n'] !== null ? autolinker.link(feature.properties['Customer_n'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <th scope="row">Address</th>\
-                        <td>' + (feature.properties['Address'] !== null ? autolinker.link(feature.properties['Address'].toLocaleString()) : '') + '</td>\
+                        <td colspan="2">' + (feature.properties['Address'] !== null ? autolinker.link(feature.properties['Address'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <th scope="row">Associated</th>\
-                        <td>' + (feature.properties['Associated'] !== null ? autolinker.link(feature.properties['Associated'].toLocaleString()) : '') + '</td>\
+                        <td colspan="2">' + (feature.properties['Associated'] !== null ? autolinker.link(feature.properties['Associated'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <th scope="row">Customer_i</th>\
-                        <td>' + (feature.properties['Customer_i'] !== null ? autolinker.link(feature.properties['Customer_i'].toLocaleString()) : '') + '</td>\
+                        <td colspan="2">' + (feature.properties['Customer_i'] !== null ? autolinker.link(feature.properties['Customer_i'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <th scope="row">Customer_t</th>\
-                        <td>' + (feature.properties['Customer_t'] !== null ? autolinker.link(feature.properties['Customer_t'].toLocaleString()) : '') + '</td>\
+                        <td colspan="2">' + (feature.properties['Customer_t'] !== null ? autolinker.link(feature.properties['Customer_t'].toLocaleString()) : '') + '</td>\
                     </tr>\
                 </table>';
             layer.bindPopup(popupContent, {maxHeight: 400});
         }
 
-        function style_CustomerAnalysis_4_0(feature) {
+        function style_CustomerAnalysis_5_0(feature) {
             switch(String(feature.properties['Customer_t'])) {
                 case 'Current Customer':
                     return {
-                pane: 'pane_CustomerAnalysis_4',
+                pane: 'pane_CustomerAnalysis_5',
                 radius: 4.0,
                 opacity: 1,
                 color: 'rgba(35,35,35,1.0)',
@@ -830,13 +423,13 @@
                 weight: 1,
                 fill: true,
                 fillOpacity: 1,
-                fillColor: 'rgba(0,252,0,1.0)',
+                fillColor: 'rgba(14,36,206,1.0)',
                 interactive: true,
             }
                     break;
                 case 'Customer Outside Branch':
                     return {
-                pane: 'pane_CustomerAnalysis_4',
+                pane: 'pane_CustomerAnalysis_5',
                 radius: 4.0,
                 opacity: 1,
                 color: 'rgba(35,35,35,1.0)',
@@ -852,31 +445,42 @@
                     break;
             }
         }
-        map.createPane('pane_CustomerAnalysis_4');
-        map.getPane('pane_CustomerAnalysis_4').style.zIndex = 404;
-        map.getPane('pane_CustomerAnalysis_4').style['mix-blend-mode'] = 'normal';
-        var layer_CustomerAnalysis_4 = new L.geoJson(json_CustomerAnalysis_4, {
+        map.createPane('pane_CustomerAnalysis_5');
+        map.getPane('pane_CustomerAnalysis_5').style.zIndex = 405;
+        map.getPane('pane_CustomerAnalysis_5').style['mix-blend-mode'] = 'normal';
+        var layer_CustomerAnalysis_5 = new L.geoJson(json_CustomerAnalysis_5, {
             attribution: '',
             interactive: true,
-            dataVar: 'json_CustomerAnalysis_4',
-            layerName: 'layer_CustomerAnalysis_4',
-            pane: 'pane_CustomerAnalysis_4',
-            onEachFeature: pop_CustomerAnalysis_4,
+            dataVar: 'json_CustomerAnalysis_5',
+            layerName: 'layer_CustomerAnalysis_5',
+            pane: 'pane_CustomerAnalysis_5',
+            onEachFeature: pop_CustomerAnalysis_5,
             pointToLayer: function (feature, latlng) {
                 var context = {
                     feature: feature,
                     variables: {}
                 };
-                return L.circleMarker(latlng, style_CustomerAnalysis_4_0(feature));
+                return L.circleMarker(latlng, style_CustomerAnalysis_5_0(feature));
             },
         });
-        bounds_group.addLayer(layer_CustomerAnalysis_4);
-        map.addLayer(layer_CustomerAnalysis_4);
-        function pop_Bandhan_Bank_5(feature, layer) {
+        bounds_group.addLayer(layer_CustomerAnalysis_5);
+        map.addLayer(layer_CustomerAnalysis_5);
+        function pop_Bandhan_Bank_6(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
             var popupContent = '<table>\
                     <tr>\
-                        <th scope="row">Bank_Name</th>\
-                        <td>' + (feature.properties['Bank_Name'] !== null ? autolinker.link(feature.properties['Bank_Name'].toLocaleString()) : '') + '</td>\
+                        <td colspan="2">' + (feature.properties['Bank_Name'] !== null ? autolinker.link(feature.properties['Bank_Name'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
                         <td colspan="2">' + (feature.properties['Lat'] !== null ? autolinker.link(feature.properties['Lat'].toLocaleString()) : '') + '</td>\
@@ -885,20 +489,19 @@
                         <td colspan="2">' + (feature.properties['Long'] !== null ? autolinker.link(feature.properties['Long'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <th scope="row">Address</th>\
-                        <td>' + (feature.properties['Address'] !== null ? autolinker.link(feature.properties['Address'].toLocaleString()) : '') + '</td>\
+                        <td colspan="2">' + (feature.properties['Address'] !== null ? autolinker.link(feature.properties['Address'].toLocaleString()) : '') + '</td>\
                     </tr>\
                 </table>';
             layer.bindPopup(popupContent, {maxHeight: 400});
         }
 
-        function style_Bandhan_Bank_5_0() {
+        function style_Bandhan_Bank_6_0() {
             return {
-                pane: 'pane_Bandhan_Bank_5',
+                pane: 'pane_Bandhan_Bank_6',
                 shape: 'diamond',
-                radius: 8.0,
+                radius: 8.8,
                 opacity: 1,
-                color: 'rgba(61,128,53,1.0)',
+                color: 'rgba(128,17,25,1.0)',
                 dashArray: '',
                 lineCap: 'butt',
                 lineJoin: 'miter',
@@ -909,26 +512,26 @@
                 interactive: true,
             }
         }
-        map.createPane('pane_Bandhan_Bank_5');
-        map.getPane('pane_Bandhan_Bank_5').style.zIndex = 405;
-        map.getPane('pane_Bandhan_Bank_5').style['mix-blend-mode'] = 'normal';
-        var layer_Bandhan_Bank_5 = new L.geoJson(json_Bandhan_Bank_5, {
+        map.createPane('pane_Bandhan_Bank_6');
+        map.getPane('pane_Bandhan_Bank_6').style.zIndex = 406;
+        map.getPane('pane_Bandhan_Bank_6').style['mix-blend-mode'] = 'normal';
+        var layer_Bandhan_Bank_6 = new L.geoJson(json_Bandhan_Bank_6, {
             attribution: '',
             interactive: true,
-            dataVar: 'json_Bandhan_Bank_5',
-            layerName: 'layer_Bandhan_Bank_5',
-            pane: 'pane_Bandhan_Bank_5',
-            onEachFeature: pop_Bandhan_Bank_5,
+            dataVar: 'json_Bandhan_Bank_6',
+            layerName: 'layer_Bandhan_Bank_6',
+            pane: 'pane_Bandhan_Bank_6',
+            onEachFeature: pop_Bandhan_Bank_6,
             pointToLayer: function (feature, latlng) {
                 var context = {
                     feature: feature,
                     variables: {}
                 };
-                return L.shapeMarker(latlng, style_Bandhan_Bank_5_0(feature));
+                return L.shapeMarker(latlng, style_Bandhan_Bank_6_0(feature));
             },
         });
-        bounds_group.addLayer(layer_Bandhan_Bank_5);
-        map.addLayer(layer_Bandhan_Bank_5);
+        bounds_group.addLayer(layer_Bandhan_Bank_6);
+        map.addLayer(layer_Bandhan_Bank_6);
             var title = new L.Control();
             title.onAdd = function (map) {
                 this._div = L.DomUtil.create('div', 'info');
@@ -936,7 +539,7 @@
                 return this._div;
             };
             title.update = function () {
-                this._div.innerHTML = '<h2>Bank_Customer_monitoring_kolkata_branches</h2>';
+                this._div.innerHTML = '<h2>consumer_monitoring_kolkata_branches</h2>';
             };
             title.addTo(map);
         var osmGeocoder = new L.Control.Geocoder({
@@ -949,7 +552,16 @@
         .className += ' fa fa-search';
         document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
         .title += 'Search for a place';
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'<img src="legend/Bandhan_Bank_6.png" /> Bandhan_Bank': layer_Bandhan_Bank_6,'Customer Analysis<br /><table><tr><td style="text-align: center;"><img src="legend/CustomerAnalysis_5_CurrentCustomer0.png" /></td><td>Current Customer</td></tr><tr><td style="text-align: center;"><img src="legend/CustomerAnalysis_5_CustomerOutsideBranch1.png" /></td><td>Customer Outside Branch</td></tr></table>': layer_CustomerAnalysis_5,'Consumer_Behaviour(lakh/year)<br /><table><tr><td style="text-align: center;"><img src="legend/Consumer_Behaviourlakhyear_4_1000003800000.png" /></td><td>100000 - 380000</td></tr><tr><td style="text-align: center;"><img src="legend/Consumer_Behaviourlakhyear_4_3800005200001.png" /></td><td>380000 - 520000</td></tr><tr><td style="text-align: center;"><img src="legend/Consumer_Behaviourlakhyear_4_5200006200002.png" /></td><td>520000 - 620000</td></tr><tr><td style="text-align: center;"><img src="legend/Consumer_Behaviourlakhyear_4_6200006800003.png" /></td><td>620000 - 680000</td></tr><tr><td style="text-align: center;"><img src="legend/Consumer_Behaviourlakhyear_4_6800009000004.png" /></td><td>680000 - 900000</td></tr></table>': layer_Consumer_Behaviourlakhyear_4,'<img src="legend/facilities_of_customer_3.png" /> facilities_of_customer': layer_facilities_of_customer_3,'<img src="legend/kolkata_2.png" /> kolkata': layer_kolkata_2,"Google map": layer_Googlemap_1,"OSM Standard": layer_OSMStandard_0,}).addTo(map);
         setBounds();
+        map.addControl(new L.Control.Search({
+            layer: layer_Bandhan_Bank_6,
+            initial: false,
+            hideMarkerOnCollapse: true,
+            propertyName: 'Address'}));
+        document.getElementsByClassName('search-button')[0].className +=
+         ' fa fa-binoculars';
         </script>
     </body>
 </html>
